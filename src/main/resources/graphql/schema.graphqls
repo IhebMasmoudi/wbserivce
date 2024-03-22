@@ -1,0 +1,104 @@
+type Query {
+   getUser(id: ID!): User
+   getAllUsers: [User]
+   getRole(id: ID!): Role
+   getAllRoles: [Role]
+   getServiceDep(id: ID!): ServiceDep
+   getAllServiceDep: [ServiceDep]
+}
+
+input UserInput{
+   username: String!
+   password: String!
+   email: String!
+   firstName: String!
+   lastName: String!
+}
+
+type Mutation {
+   createUser(user: UserInput, roleId: ID!, serviceDepId: ID!): User
+   updateUser(id: ID!, user: UpdateUserInput!): User
+   deleteUser(id: ID!): User
+   createRole(role: CreateRoleInput!): Role
+   updateRole(id: ID!, role: UpdateRoleInput!): Role
+   deleteRole(id: ID!): Role
+   createServiceDep(servicedep: CreateServiceDepInput!): ServiceDep
+   updateServiceDep(id: ID!, servicedep: UpdateServiceDepInput!): ServiceDep
+   deleteServiceDep(id: ID!): ServiceDep
+   login(username: String!, password: String!): AuthData
+   register(user: CreateUserInput!): User
+
+
+}
+
+input CreateUserInput {
+   username: String!
+   password: String!
+   email: String!
+   firstName: String!
+   lastName: String!
+   RoleId: Int
+   ServiceDepId: Int
+}
+
+
+
+type AuthData {
+     token: String
+}
+
+input UpdateUserInput {
+   username: String
+   password: String
+   email: String
+   firstName: String
+   lastName: String
+}
+
+input CreateRoleInput {
+   name: String!
+   description: String
+}
+
+input UpdateRoleInput {
+   name: String
+   description: String
+}
+
+input CreateServiceDepInput {
+   name: String!
+   description: String
+}
+
+type Role {
+   id: ID!
+   name: String!
+   description: String
+   createdAt: String!
+   updatedAt: String!
+   users: [User] # Add this field
+}
+
+type ServiceDep {
+   id: ID!
+   name: String!
+   description: String!
+   createdAt: String!
+   updatedAt: String!
+   users: [User] # Add this field
+}
+input UpdateServiceDepInput {
+   name: String
+   description: String
+}
+type User {
+   id: ID!
+   username: String!
+   email: String!
+   firstName: String!
+   lastName: String!
+   createdAt: String!
+   updatedAt: String!
+   role: Role # Add this field
+   serviceDep: ServiceDep # Add this field
+}
