@@ -64,6 +64,10 @@ public class AuthController {
         log.info("Registering user: {}", user.getUsername());
         log.info("Role id: {}", roleId);
         log.info("ServiceDep id: {}", serviceDepId);
+
+
+
+
         try {
             // Check if user already exists
             if (userService.existsByUsername(user.getUsername())) {

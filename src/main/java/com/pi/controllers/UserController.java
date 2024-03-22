@@ -31,6 +31,10 @@ public class UserController {
 		return userService.selectOne(id);
 	}
 
+
+
+
+
 	@MutationMapping
 	public User createUser(@Argument User user, @Argument Long roleId, @Argument Long serviceDepId) {
 		log.info("User: {}", user);

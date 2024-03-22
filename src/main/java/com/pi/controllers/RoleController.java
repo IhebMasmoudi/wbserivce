@@ -16,6 +16,9 @@ import java.util.List;
 @CrossOrigin("*")
 public class RoleController {
 
+
+
+
     @Autowired
     private RoleService roleService;
     @QueryMapping
