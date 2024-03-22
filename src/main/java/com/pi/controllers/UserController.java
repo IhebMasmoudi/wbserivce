@@ -31,12 +31,12 @@ public class UserController {
 		return userService.selectOne(id);
 	}
 
-/*	@MutationMapping
+	@MutationMapping
 	public User createUser(@Argument User user, @Argument Long roleId, @Argument Long serviceDepId) {
 		log.info("User: {}", user);
 
 		return userService.addUser(user, roleId ,serviceDepId);
-	}*/
+	}
 
 	@MutationMapping
 	public User updateUser(@Argument Long id, @Argument User user) {

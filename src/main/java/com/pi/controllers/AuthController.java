@@ -59,43 +59,26 @@ public class AuthController {
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @MutationMapping
-    public ResponseEntity<?> register(@Argument User user) {
+    public User register(@Argument User user, @Argument Long roleId, @Argument Long serviceDepId) {
         log.info("Registering user: {}", user.getUsername());
+        log.info("Role id: {}", roleId);
+        log.info("ServiceDep id: {}", serviceDepId);
         try {
             // Check if user already exists
             if (userService.existsByUsername(user.getUsername())) {
                 log.error("Registration failed: Username {} is already taken.", user.getUsername());
-                return ResponseEntity.badRequest().body("Error: Username is already taken.");
+                throw new RuntimeException("Error: Username is already taken.");
             }
 
             if (userService.existsByEmail(user.getEmail())) {
                 log.error("Registration failed: Email {} is already in use.", user.getEmail());
-                return ResponseEntity.badRequest().body("Error: Email is already in use.");
+                throw new RuntimeException("Error: Email is already in use.");
             }
 
             // Create new user's account
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-            User savedUser = userService.addUser(user);
+            User savedUser = userService.addUser(user, roleId, serviceDepId);
 
             // Assuming UserPrincipal is your UserDetails implementation
             UserPrincipal userPrincipal = new UserPrincipal();
@@ -107,10 +90,12 @@ public class AuthController {
             // You can also add logic to save the JWT to the database if needed
 
             log.info("User {} registered successfully.", user.getUsername());
-            return ResponseEntity.ok(jwt);
+            return savedUser;
         } catch (Exception e) {
             log.error("An unexpected error occurred while registering user: {}", user.getUsername(), e);
-            return ResponseEntity.internalServerError().body("An unexpected error occurred. Please try again later.");
+            throw new RuntimeException("An unexpected error occurred. Please try again later.");
         }
     }
+
+
 }

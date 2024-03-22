@@ -26,7 +26,7 @@ type Mutation {
    updateServiceDep(id: ID!, servicedep: UpdateServiceDepInput!): ServiceDep
    deleteServiceDep(id: ID!): ServiceDep
    login(username: String!, password: String!): AuthData
-   register(user: CreateUserInput!): User
+   register(user: UserInput, roleId: ID!, serviceDepId: ID!): User
 
 
 }
